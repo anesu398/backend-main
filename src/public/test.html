@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Testing Tool</title>
+    <link rel="stylesheet" href="./test.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>API Testing Tool</h1>
+            <div class="auth">
+                <button onclick="showLogin()">Login</button>
+                <button onclick="showSignup()">Sign Up</button>
+                <button onclick="logout()" style="display:none;" id="logout-button">Logout</button>
+            </div>
+        </header>
+
+        <div id="auth-forms" class="auth-forms">
+            <div id="login-form" class="auth-form" style="display:none;">
+                <h2>Login</h2>
+                <input type="text" id="login-username" placeholder="Username">
+                <input type="password" id="login-password" placeholder="Password">
+                <button onclick="login()">Login</button>
+            </div>
+            <div id="signup-form" class="auth-form" style="display:none;">
+                <h2>Sign Up</h2>
+                <input type="text" id="signup-username" placeholder="Username">
+                <input type="password" id="signup-password" placeholder="Password">
+                <button onclick="signup()">Sign Up</button>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="env-management">
+                <h2>Environments</h2>
+                <div id="env-list" class="grid"></div>
+                <div class="grid">
+                    <input type="text" id="env-name" placeholder="Environment Name">
+                    <button onclick="addEnvironment()">Add Environment</button>
+                </div>
+            </div>
+
+            <div class="comments">
+                <h2>Comments</h2>
+                <div id="comment-list" class="grid"></div>
+                <div class="grid">
+                    <textarea id="comment-content" placeholder="Add a comment"></textarea>
+                    <button onclick="addComment()">Add Comment</button>
+                </div>
+            </div>
+
+            <div class="tests">
+                <h2>Automated Tests</h2>
+                <div id="test-list" class="grid"></div>
+                <div class="grid">
+                    <input type="text" id="test-name" placeholder="Test Name">
+                    <button onclick="addTest()">Add Test</button>
+                </div>
+            </div>
+
+            <div class="request-groups">
+                <h2>Request Groups</h2>
+                <div id="request-group-list" class="grid"></div>
+                <div class="grid">
+                    <input type="text" id="request-group-name" placeholder="Group Name">
+                    <button onclick="addRequestGroup()">Add Group</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'tab1')">Tab 1</button>
+            <button class="tab-button" onclick="openTab(event, 'tab2')">Tab 2</button>
+            <button class="tab-button" onclick="openTab(event, 'tab3')">Tab 3</button>
+        </div>
+
+        <div id="tab1" class="tab-content active">
+            <div class="request-grid">
+                <div class="request">
+                    <select id="method-1">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                    <input type="text" id="url-1" placeholder="Enter request URL">
+                    <button onclick="sendRequest('tab1')">Send</button>
+                </div>
+                <div class="headers">
+                    <h3>Headers</h3>
+                    <div id="headers-1"></div>
+                    <button onclick="addHeader('headers-1')">Add Header</button>
+                </div>
+                <div class="body">
+                    <h3>Body</h3>
+                    <textarea id="body-1" placeholder="Enter request body"></textarea>
+                </div>
+                <div class="scripts">
+                    <h3>Pre-request Script</h3>
+                    <textarea id="pre-request-script-1" placeholder="Enter pre-request script here"></textarea>
+                    <h3>Test Script</h3>
+                    <textarea id="test-script-1" placeholder="Enter test script here">/* Test ../models/Test API */
+const response = pm.response.json();
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("Response time is less than 500ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+pm.test("Response contains expected properties", function () {
+    pm.expect(response).to.have.property('data');
+    pm.expect(response.data).to.have.property('id');
+    pm.expect(response.data).to.have.property('name');
+});</textarea>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre id="response-content-1"></pre>
+                </div>
+                <div class="visualization">
+                    <h3>Visualization</h3>
+                    <canvas id="response-chart-1"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <!-- Similar content for tab2 -->
+        </div>
+        <div id="tab3" class="tab-content">
+            <!-- Similar content for tab3 -->
+        </div>
+
+        <div class="history">
+            <h3>Request History</h3>
+            <div id="history" class="grid"></div>
+        </div>
+
+        <div class="code-snippet">
+            <h2>Code Snippet</h2>
+            <select id="language" onchange="generateCodeSnippet()">
+                <option value="curl">cURL</option>
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+            <pre id="code-snippet"></pre>
+        </div>
+
+        <div class="response-info">
+            <div id="status"></div>
+            <div id="response-time"></div>
+        </div>
+        <div class="response" id="response"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./test.js"></script>
+</body>
+</html>

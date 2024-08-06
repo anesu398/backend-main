@@ -1,0 +1,264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "ZETDC API Documentation",
+    "version": "1.0.0",
+    "title": "ZETDC API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "ndabaprinco@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "api.zetdc.com",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "electricity",
+      "description": "Electricity Distribution Management"
+    },
+    {
+      "name": "water",
+      "description": "Water Distribution Management"
+    },
+    {
+      "name": "gas",
+      "description": "Gas Distribution Management"
+    },
+    {
+      "name": "service",
+      "description": "Service Request Management"
+    }
+  ],
+  "paths": {
+    "/electricity/{suburb}": {
+      "get": {
+        "tags": ["electricity"],
+        "summary": "Get electricity status for a specific suburb",
+        "description": "",
+        "operationId": "getElectricityStatus",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "suburb",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ElectricityDistribution"
+            }
+          }
+        }
+      }
+    },
+    "/water/{area}": {
+      "get": {
+        "tags": ["water"],
+        "summary": "Get water status for a specific area",
+        "description": "",
+        "operationId": "getWaterStatus",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "area",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/WaterDistribution"
+            }
+          }
+        }
+      }
+    },
+    "/gas/{region}": {
+      "get": {
+        "tags": ["gas"],
+        "summary": "Get gas status for a specific region",
+        "description": "",
+        "operationId": "getGasStatus",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GasDistribution"
+            }
+          }
+        }
+      }
+    },
+    "/service/{requestId}": {
+      "get": {
+        "tags": ["service"],
+        "summary": "Get service request by ID",
+        "description": "",
+        "operationId": "getServiceRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ElectricityDistribution": {
+      "type": "object",
+      "properties": {
+        "suburb": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "upcomingStages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stage"
+          }
+        }
+      }
+    },
+    "WaterDistribution": {
+      "type": "object",
+      "properties": {
+        "area": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "outageStartTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "outageEndTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "affectedZones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GasDistribution": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "disruptionStartTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "disruptionEndTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "impactedAreas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ServiceRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "details": {
+          "type": "string"
+        },
+        "requester": {
+          "type": "string"
+        }
+      }
+    },
+    "Stage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,274 @@
+openapi: 3.0.0
+info:
+  title: ZETDC API
+  description: ZETDC API for loadshedding status and suburb information.
+  version: 1.0.0.2024EC
+servers:
+  - url: http://localhost:8800/api
+tags:
+  - name: Loadshedding Status
+    description: Endpoints related to loadshedding status
+  - name: Area Status
+    description: Endpoints related to area status
+  - name: Suburb
+    description: Endpoints related to suburb information
+paths:
+  /loadshedding-status:
+    get:
+      summary: Get all loadshedding statuses
+      tags: [Loadshedding Status]
+      responses:
+        '200':
+          description: List of all loadshedding statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoadsheddingStatus'
+    post:
+      summary: Create a new loadshedding status
+      tags: [Loadshedding Status]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoadsheddingStatus'
+      responses:
+        '201':
+          description: Loadshedding status created successfully
+        '400':
+          description: Invalid input
+  '/loadshedding-status/{id}':
+    get:
+      summary: Get loadshedding status by ID
+      tags: [Loadshedding Status]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Loadshedding status ID
+      responses:
+        '200':
+          description: Loadshedding status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadsheddingStatus'
+        '404':
+          description: Loadshedding status not found
+    put:
+      summary: Update loadshedding status by ID
+      tags: [Loadshedding Status]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Loadshedding status ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoadsheddingStatus'
+      responses:
+        '200':
+          description: Loadshedding status updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Loadshedding status not found
+    delete:
+      summary: Delete loadshedding status by ID
+      tags: [Loadshedding Status]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Loadshedding status ID
+      responses:
+        '200':
+          description: Loadshedding status deleted successfully
+        '404':
+          description: Loadshedding status not found
+  '/area-status/{areaName}':
+    get:
+      summary: Get area status by name
+      tags: [Area Status]
+      parameters:
+        - in: path
+          name: areaName
+          required: true
+          schema:
+            type: string
+          description: Area name
+      responses:
+        '200':
+          description: Area status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AreaStatus'
+        '404':
+          description: Area status not found
+  /upcoming-events:
+    get:
+      summary: Get upcoming events
+      tags: [Events]
+      responses:
+        '200':
+          description: List of upcoming events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+  /search-area:
+    get:
+      summary: Search for an area
+      tags: [Area]
+      parameters:
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+          description: Search query for the area
+      responses:
+        '200':
+          description: Search results for the area
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Area'
+  /areas-nearby:
+    get:
+      summary: Get nearby areas
+      tags: [Area]
+      parameters:
+        - in: query
+          name: lat
+          required: true
+          schema:
+            type: number
+          description: Latitude of the center point
+        - in: query
+          name: lon
+          required: true
+          schema:
+            type: number
+          description: Longitude of the center point
+      responses:
+        '200':
+          description: List of nearby areas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Area'
+  /user-generated-topics:
+    post:
+      summary: Post a user-generated topic
+      tags: [User Topics]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserTopic'
+      responses:
+        '201':
+          description: User topic created successfully
+        '400':
+          description: Invalid input
+  /add-event:
+    post:
+      summary: Add a new event
+      tags: [Events]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: Event added successfully
+        '400':
+          description: Invalid input
+  /add-area:
+    post:
+      summary: Add a new area
+      tags: [Area]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Area'
+      responses:
+        '201':
+          description: Area added successfully
+        '400':
+          description: Invalid input
+  '/suburb/{code}':
+    get:
+      summary: Get suburb information by code
+      tags: [Suburb]
+      parameters:
+        - in: path
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Suburb code
+      responses:
+        '200':
+          description: Suburb information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Suburb'
+        '404':
+          description: Suburb not found
+components:
+  schemas:
+    LoadsheddingStatus:
+      type: object
+      required:
+        - suburb
+        - status
+        - stage
+        - startTime
+        - endTime
+      properties:
+        suburb:
+          type: string
+        status:
+          type: string
+          enum: [Scheduled, Unscheduled]
+        stage:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    AreaStatus:
+      type: object
+      properties:
+        areaName:
+          type: string
+        status

@@ -1,0 +1,358 @@
+openapi: 3.0.1
+info:
+  title: ZETDC Load-shedding API
+  description: API documentation for ZETDC Load-shedding service
+  version: 1.0.0
+servers:
+  - url: https://zesapushinfo.vercel.app/
+paths:
+  /api/schedule/{areaId}:
+    get:
+      summary: Get Load-shedding Schedule
+      description: Retrieve the load-shedding schedule for a specific area.
+      parameters:
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the area for which the load-shedding schedule is to be retrieved.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  areaId:
+                    type: string
+                  areaName:
+                    type: string
+                  schedule:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        day:
+                          type: string
+                        time:
+                          type: string
+        '400':
+          description: Invalid areaId provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+  /api/areas:
+    get:
+      summary: Get All Areas
+      description: Retrieve a list of all areas covered by the load-shedding API.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  areas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        areaId:
+                          type: string
+                        areaName:
+                          type: string
+  /api/status/{areaId}:
+    get:
+      summary: Get Current Load-shedding Status
+      description: Retrieve the current load-shedding status for a specific area.
+      parameters:
+        - name: areaId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the area for which the load-shedding status is to be retrieved.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  areaId:
+                    type: string
+                  areaName:
+                    type: string
+                  status:
+                    type: string
+                  nextScheduledOutage:
+                    type: string
+                    format: date-time
+        '400':
+          description: Invalid areaId provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+  /api/report/restoration:
+    post:
+      summary: Report Power Restoration
+      description: Report the restoration of power in a specific area.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areaId:
+                  type: string
+                restorationTime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  areaId:
+                    type: string
+                  restorationTime:
+                    type: string
+                    format: date-time
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+  /api/report/outage:
+    post:
+      summary: Report Power Outage
+      description: Report a power outage in a specific area.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areaId:
+                  type: string
+                outageTime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  areaId:
+                    type: string
+                  outageTime:
+                    type: string
+                    format: date-time
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+  /api/schedule:
+    post:
+      summary: Create Load-shedding Schedule
+      description: Create a new load-shedding schedule for an area.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areaId:
+                  type: string
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      day:
+                        type: string
+                      time:
+                        type: string
+      responses:
+        '201':
+          description: Schedule created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  scheduleId:
+                    type: string
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+  /api/schedule/{scheduleId}:
+    put:
+      summary: Update Load-shedding Schedule
+      description: Update an existing load-shedding schedule.
+      parameters:
+        - name: scheduleId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the schedule to be updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areaId:
+                  type: string
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      day:
+                        type: string
+                      time:
+                        type: string
+      responses:
+        '200':
+          description: Schedule updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  scheduleId:
+                    type: string
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+    delete:
+      summary: Delete Load-shedding Schedule
+      description: Delete an existing load-shedding schedule.
+      parameters:
+        - name: scheduleId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the schedule to be deleted.
+      responses:
+        '200':
+          description: Schedule deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  scheduleId:
+                    type: string
+        '400':
+          description: Invalid scheduleId provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string

@@ -1,0 +1,12 @@
+openapi: '3.0.2'
+info:
+  title: ZesaPushInfo
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api/upcoming-events
+paths:
+  /test:
+    get:
+      responses:
+        '200':
+          description: OK
