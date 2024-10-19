@@ -13,7 +13,7 @@ const options = {
                     For more information, visit the [official documentation](https://rapidapi.com/anesu21/api/zesapushinfo).',
       contact: {
         name: 'Anesu Ndava',
-        email: 'ndabaprinco@gmail.com',
+        email: 'anesu@rodent.co.zw',
         url: 'https://rodent.vercel.app',
       },
       license: {
@@ -23,7 +23,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://backend-nl4r.onrender.com/api',
+        url: 'https://www.shedsense.co.zw/api',
       },
     ],
   },
