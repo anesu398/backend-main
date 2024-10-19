@@ -1,0 +1,100 @@
+name: Node.js CI/CD Pipeline
+
+# Trigger the workflow on push or pull request to the main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Define the jobs
+jobs:
+  # Job 1: Install, lint, test, and build the Node.js application
+  build:
+    runs-on: ubuntu-latest
+
+    # Define environment variables (if necessary)
+    env:
+      NODE_ENV: test
+
+    # Specify the steps required for this job
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment (use cache for speed)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'  # Caches npm dependencies for faster builds
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm ci  # 'ci' is faster and ensures a clean install based on package-lock.json
+
+      # Step 4: Run ESLint for code linting
+      - name: Run ESLint
+        run: npm run lint
+
+      # Step 5: Run tests via Jest (or any testing framework you use)
+      - name: Run tests
+        run: npm test
+
+      # Step 6: Build the project (if you have a build step)
+      - name: Build the project
+        run: npm run build
+
+  # Job 2: Deploy to a cloud platform (e.g., Heroku in this case)
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Only run the deploy job if the previous build job succeeded
+    needs: build
+
+    # Define environment variables for deployment (e.g., API keys, secrets)
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: 'your-heroku-app-name'
+
+    steps:
+      # Step 1: Check out the code again (deployment job is isolated from the build job)
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (same version as build)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      # Step 3: Install dependencies (necessary for Heroku deployment)
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Deploy to Heroku
+      - name: Deploy to Heroku
+        run: |
+          echo "Deploying to Heroku..."
+          git remote add heroku https://git.heroku.com/${{ env.HEROKU_APP_NAME }}.git
+          git push heroku main
+
+  # Job 3: Notify Slack (optional)
+  notify:
+    runs-on: ubuntu-latest
+
+    # Only notify if both build and deploy succeed
+    needs: [build, deploy]
+
+    steps:
+      # Step 1: Send message to Slack (or any other notification service)
+      - name: Send notification to Slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          slack-message: "🚀 Deployment to Heroku was successful!"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: '#your-slack-channel'
