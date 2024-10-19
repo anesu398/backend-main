@@ -4,7 +4,7 @@ info:
   description: ZETDC API for loadshedding status and suburb information.
   version: 1.0.0.2024EC
 servers:
-  - url: http://localhost:8800/api
+  - url: https://www.shedsense.co.zw/api
 tags:
   - name: Loadshedding Status
     description: Endpoints related to loadshedding status
