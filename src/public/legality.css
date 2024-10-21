@@ -1,0 +1,119 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #111; /* Dark background for bold aesthetic */
+    color: #fff;
+  }
+  
+  header {
+    background-color: #222;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .nav-links a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    position: relative;
+  }
+  
+  .nav-links a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #ff6347; /* Vibrant accent color */
+  }
+  
+  .nav-links a:hover {
+    color: #ff6347; /* Accent color for hover */
+  }
+  
+  /* Hero Section */
+  .hero {
+    background-color: #1b1b1b;
+    padding: 120px 20px;
+    text-align: center;
+    background-image: url('./images/hero-background.jpg'); /* Add an aggressive visual */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .hero h1 {
+    font-size: 4rem;
+    color: #ff6347;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background-color: #ff6347;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #ff2a00;
+  }
+  
+  /* Section Styles */
+  .section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #111;
+  }
+  
+  .section.alt-background {
+    background-color: #222;
+  }
+  
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ff6347;
+    text-transform: uppercase;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #ddd;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid #ff6347;
+  }
+  
