@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #343a40;
+  }
+  
+  .header {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar img {
+    height: 40px; /* Set the logo height */
+    width: auto;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: #343a40;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  .hero {
+    background-image: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+    color: white;
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  .btn-primary {
+    background-color: #28a745;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #218838;
+  }
+  
+  .section {
+    padding: 4rem 2rem;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+  
+  .section p {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+  }
+  
+  .features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .feature-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    flex: 1 1 300px;
+    max-width: 350px;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .alt-background {
+    background-color: #f1f3f5;
+  }
+  
+  .footer {
+    background-color: #343a40;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
